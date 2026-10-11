@@ -1,0 +1,50 @@
+ >🛍️ आपका कार्ट</h2>
+<div id="cart" style="text-align:center;padding:10px">अभी कार्ट खाली है</div>
+<h3 id="total" style="text-align:center">कुल: ₹0</h3>
+
+<a class="order" href="#" onclick="orderWhatsApp()">WhatsApp पर ऑर्डर करें</a>
+
+<footer>
+  <p>© Maa Vaishno Mart</p>
+  <p>ताज़ा सामान, सही दाम!</p>
+</footer>
+
+<script>
+  let cart = [];
+
+  function add(name, price) {
+    cart.push({name, price});
+    showCart();
+  }
+
+  function showCart() {
+    document.getElementById('cart').innerHTML =
+      cart.length
+      ? cart.map(p => `${p.name} — ₹${p.price}`).join('<br>')
+      : 'अभी कार्ट खाली है';
+
+    document.getElementById('total').textContent =
+      'कुल: ₹' + cart.reduce((sum, p) => sum + p.price, 0);
+  }
+
+  function filterProducts() {
+    let q = document.getElementById('search').value.toLowerCase();
+    document.querySelectorAll('.card').forEach(card => {
+      card.style.display = card.innerText.toLowerCase().includes(q) ? '' : 'none';
+    });
+  }
+
+  function orderWhatsApp() {
+    if (!cart.length) {
+      alert('पहले कार्ट में सामान डालें।');
+      return;
+    }
+    let message = 'Namaste Maa Vaishno Mart! Mera order:\\n' +
+      cart.map(p => p.name + ' - ₹' + p.price).join('\\n') +
+      '\\nTotal: ₹' + cart.reduce((sum, p) => sum + p.price, 0);
+    alert('WhatsApp ऑर्डर चालू करने के लिए पहले दुकान का WhatsApp नंबर सेट करना होगा।');
+  }
+</script>
+
+</body>
+</html>
